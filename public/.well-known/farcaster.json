@@ -1,0 +1,28 @@
+{
+  "frame": {
+    "name": "Sober",
+    "version": "1",
+    "iconUrl": "https://v0-farcaster-sobriety-tracker.vercel.app/icon.png",
+    "homeUrl": "https://v0-farcaster-sobriety-tracker.vercel.app",
+    "imageUrl": "https://v0-farcaster-sobriety-tracker.vercel.app/image.png",
+    "buttonTitle": "One Day At a Time",
+    "splashImageUrl": "https://v0-farcaster-sobriety-tracker.vercel.app/splash.png",
+    "splashBackgroundColor": "#FFFFFF",
+    "webhookUrl": "https://v0-farcaster-sobriety-tracker.vercel.app/api/webhook",
+    "subtitle": "One Day at A Time",
+    "description": "Track your sobriety journey with confidence. Log your progress, celebrate milestones, and stay motivated with daily check-ins.",
+    "primaryCategory": "health-fitness",
+    "tags": ["wellness", "sobriety", "sober", "addiction", "mentalhealth"],
+    "tagline": "Track Sobriety, Stay Sober",
+    "ogTitle": "Sober - Your Greatest Asset",
+    "ogDescription": "Track your sobriety journey with confidence, One Day at a Time."
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjM3MzU2NiwidHlwZSI6ImF1dGgiLCJrZXkiOiIweGI5NUMyQjY3OTREMzFjQmNEMEM0OTRBOTE0MTE5MzMzNWRhMzc2MUIifQ",
+    "payload": "eyJkb21haW4iOiJ2MC1mYXJjYXN0ZXItc29icmlldHktdHJhY2tlci52ZXJjZWwuYXBwIn0",
+    "signature": "d/8s3Z3BKK/ikESrJEB7usqiL5k/KKvtpJA/odIctjMn24Pz2gey8XtVQFObj7jW42ea+A56KDa+29icV2HnvRs="
+  },
+  "baseBuilder": {
+    "allowedAddresses": ["0x5bA5796fAd172844133234339452E4a8Df038037"]
+  }
+}
