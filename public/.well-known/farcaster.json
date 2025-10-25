@@ -29,7 +29,6 @@
     "signature": "d/8s3Z3BKK/ikESrJEB7usqiL5k/KKvtpJA/odIctjMn24Pz2gey8XtVQFObj7jW42ea+A56KDa+29icV2HnvRs="
   },
   "baseBuilder": {
-    "ownerAddress": "0x5bA5796fAd172844133234339452E4a8Df038037"
-  },
-
+    "ownerAddresses": ["0x5bA5796fAd172844133234339452E4a8Df038037"]
+  }
 }
