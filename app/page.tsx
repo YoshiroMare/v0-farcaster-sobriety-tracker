@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Trophy, Star, Users, Home, Medal, Crown, CalendarDays, MapPin, BookOpen, ExternalLink } from 'lucide-react'
-import { sdk } from "@farcaster/miniapp-sdk"
+import { sdk, type Context } from "@farcaster/miniapp-sdk"
 
 interface CheckinData {
   lastCheckin: string | null
@@ -47,6 +47,7 @@ export default function SobrietyTracker() {
   const [setupMode, setSetupMode] = useState<"choose" | "start-today" | "custom-date">("choose")
   const [customStartDate, setCustomStartDate] = useState("")
   const [celebrationParticles, setCelebrationParticles] = useState<Array<{ id: number; delay: number }>>([])
+  const [userContext, setUserContext] = useState<Context.FrameContext | null>(null)
 
   // Mock leaderboard data
   const generateLeaderboard = (): LeaderboardUser[] => {
@@ -103,6 +104,8 @@ export default function SobrietyTracker() {
     // Call SDK ready after the app is fully loaded and ready to display
     const initializeFarcasterSDK = async () => {
       try {
+        const context = await sdk.context
+        setUserContext(context)
         await sdk.actions.ready()
       } catch (error) {
         console.error("Failed to initialize Farcaster SDK:", error)
@@ -518,6 +521,37 @@ export default function SobrietyTracker() {
               <p className="text-muted-foreground text-lg">Community champions</p>
             </div>
           </div>
+
+          {userContext?.user && (
+            <div className="retro-card rounded-xl p-1">
+              <Card className="border-0 bg-transparent">
+                <CardContent className="pt-4 pb-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      {userContext.user.pfpUrl && (
+                        <img 
+                          src={userContext.user.pfpUrl || "/placeholder.svg"} 
+                          alt={userContext.user.displayName || userContext.user.username || "User"} 
+                          className="w-10 h-10 rounded-full border-2 border-accent"
+                        />
+                      )}
+                      <div>
+                        <div className="font-bold text-lg text-foreground">
+                          {userContext.user.displayName || userContext.user.username || "Anonymous"}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          @{userContext.user.username || "unknown"}
+                        </div>
+                      </div>
+                    </div>
+                    <Badge variant="secondary" className="text-sm px-3 py-1">
+                      FID: {userContext.user.fid}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
 
           {leaderboard.find((u) => u.isCurrentUser) && (
             <div className="retro-card rounded-xl p-1 retro-glow">
