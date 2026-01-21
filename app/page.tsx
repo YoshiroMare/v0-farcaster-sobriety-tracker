@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Trophy, Star, Users, Home, Medal, Crown, CalendarDays, MapPin, BookOpen, ExternalLink } from "lucide-react"
+import { Trophy, Star, Users, Home, Medal, Crown, CalendarDays, MapPin, BookOpen, ExternalLink } from 'lucide-react'
 import { sdk } from "@farcaster/miniapp-sdk"
 
 interface CheckinData {
@@ -475,7 +475,7 @@ export default function SobrietyTracker() {
                             <div className="text-3xl font-bold text-primary retro-text-shadow">
                               {calculateStreakFromStartDate(customStartDate, [])}
                             </div>
-                            <div className="text-base text-muted-foreground">Days since you started</div>
+                            <div className="text-sm text-muted-foreground">Days since you started</div>
                           </div>
                         </CardContent>
                       </Card>
@@ -659,8 +659,8 @@ export default function SobrietyTracker() {
         <div className="retro-card rounded-xl p-1 retro-glow">
           <Card className="border-0 bg-transparent text-center">
             <CardHeader>
-              <CardTitle className="text-5xl text-primary retro-text-shadow flex items-center justify-center space-x-3">
-                <Trophy className="h-12 w-12 drop-shadow-lg" />
+              <CardTitle className="text-7xl text-primary retro-text-shadow flex items-center justify-center space-x-3">
+                <Trophy className="h-16 w-16 drop-shadow-lg" />
                 <span>{checkinData.currentStreak}</span>
               </CardTitle>
               <CardDescription className="text-xl font-semibold">Days Sober</CardDescription>
