@@ -7,7 +7,19 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Trophy, Star, Users, Home, Medal, Crown, CalendarDays, MapPin, BookOpen, ExternalLink } from 'lucide-react'
-import { sdk, type Context } from "@farcaster/miniapp-sdk"
+import { sdk } from "@farcaster/miniapp-sdk"
+import { Context } from "@farcaster/miniapp-sdk" // Declare the Context variable
+
+interface FarcasterUser {
+  fid: number
+  username?: string
+  displayName?: string
+  pfpUrl?: string
+}
+
+interface FarcasterContext {
+  user: FarcasterUser
+}
 
 interface CheckinData {
   lastCheckin: string | null
@@ -47,7 +59,7 @@ export default function SobrietyTracker() {
   const [setupMode, setSetupMode] = useState<"choose" | "start-today" | "custom-date">("choose")
   const [customStartDate, setCustomStartDate] = useState("")
   const [celebrationParticles, setCelebrationParticles] = useState<Array<{ id: number; delay: number }>>([])
-  const [userContext, setUserContext] = useState<Context.FrameContext | null>(null)
+  const [userContext, setUserContext] = useState<FarcasterContext | null>(null)
 
   // Mock leaderboard data
   const generateLeaderboard = (): LeaderboardUser[] => {
@@ -104,11 +116,22 @@ export default function SobrietyTracker() {
     // Call SDK ready after the app is fully loaded and ready to display
     const initializeFarcasterSDK = async () => {
       try {
+        console.log("[v0] Initializing Farcaster SDK...")
         const context = await sdk.context
-        setUserContext(context)
+        console.log("[v0] SDK context received:", context)
+        if (context?.user) {
+          setUserContext(context as FarcasterContext)
+        }
         await sdk.actions.ready()
+        console.log("[v0] SDK ready called successfully")
       } catch (error) {
-        console.error("Failed to initialize Farcaster SDK:", error)
+        console.error("[v0] Failed to initialize Farcaster SDK:", error)
+        // Still call ready even if context fails
+        try {
+          await sdk.actions.ready()
+        } catch (e) {
+          console.error("[v0] Failed to call ready:", e)
+        }
       }
     }
 
