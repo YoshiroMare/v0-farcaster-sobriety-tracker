@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Trophy, Star, Users, Home, Medal, Crown, CalendarDays, MapPin, BookOpen, ExternalLink } from 'lucide-react'
+import { Trophy, Users, Home, Medal, Crown, CalendarDays, MapPin, BookOpen, ExternalLink } from 'lucide-react'
 import { sdk, type Context } from "@farcaster/miniapp-sdk"
 
 interface CheckinData {
@@ -30,6 +30,116 @@ interface LeaderboardUser {
 
 type View = "tracker" | "leaderboard"
 
+interface Particle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  life: number
+  maxLife: number
+  size: number
+  color: string
+}
+
+function ParticleExplosion() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    
+    const colors = ['#000000', '#1a1a1a', '#333333', '#4d4d4d', '#666666']
+    const particles: Particle[] = []
+    const centerX = canvas.width / 2
+    const centerY = canvas.height / 2
+    
+    // Create particles from center
+    for (let i = 0; i < 80; i++) {
+      const angle = (Math.PI * 2 * i) / 80 + Math.random() * 0.5
+      const speed = 3 + Math.random() * 6
+      particles.push({
+        x: centerX,
+        y: centerY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1,
+        maxLife: 1,
+        size: 2 + Math.random() * 3,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      })
+    }
+    
+    let animationId: number
+    let textOpacity = 0
+    let textFadeIn = true
+    
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      
+      // Draw text
+      if (textFadeIn && textOpacity < 1) {
+        textOpacity += 0.03
+      } else if (textOpacity >= 1) {
+        textFadeIn = false
+      }
+      
+      ctx.save()
+      ctx.globalAlpha = Math.min(1, textOpacity)
+      ctx.font = 'bold 32px system-ui, -apple-system, sans-serif'
+      ctx.fillStyle = '#000000'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText('One Day At a Time', centerX, centerY)
+      ctx.restore()
+      
+      let allDead = true
+      
+      particles.forEach(p => {
+        if (p.life <= 0) return
+        allDead = false
+        
+        p.x += p.vx
+        p.y += p.vy
+        p.vy += 0.1
+        p.vx *= 0.98
+        p.life -= 0.012
+        
+        const radius = Math.max(0, p.size * p.life)
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2)
+        ctx.fillStyle = p.color
+        ctx.globalAlpha = Math.max(0, p.life)
+        ctx.fill()
+      })
+      
+      ctx.globalAlpha = 1
+      
+      if (!allDead || textOpacity < 1) {
+        animationId = requestAnimationFrame(animate)
+      }
+    }
+    
+    animate()
+    
+    return () => {
+      if (animationId) cancelAnimationFrame(animationId)
+    }
+  }, [])
+  
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-50"
+    />
+  )
+}
+
 export default function SobrietyTracker() {
   const [currentView, setCurrentView] = useState<View>("tracker")
   const [checkinData, setCheckinData] = useState<CheckinData>({
@@ -46,7 +156,7 @@ export default function SobrietyTracker() {
   const [isLoading, setIsLoading] = useState(false)
   const [setupMode, setSetupMode] = useState<"choose" | "start-today" | "custom-date">("choose")
   const [customStartDate, setCustomStartDate] = useState("")
-  const [celebrationParticles, setCelebrationParticles] = useState<Array<{ id: number; delay: number }>>([])
+
   const [userContext, setUserContext] = useState<Context.FrameContext | null>(null)
 
   // Mock leaderboard data
@@ -224,16 +334,9 @@ export default function SobrietyTracker() {
     setIsLoading(false)
     setShowCelebration(true)
 
-    const particles = Array.from({ length: 8 }, (_, i) => ({
-      id: i,
-      delay: Math.random() * 1000,
-    }))
-    setCelebrationParticles(particles)
-
     setTimeout(() => {
       setShowCelebration(false)
-      setCelebrationParticles([])
-    }, 3000)
+    }, 2000)
   }
 
   const getMotivationalMessage = () => {
@@ -649,76 +752,33 @@ export default function SobrietyTracker() {
           </div>
         </div>
 
-        {showCelebration && (
-          <>
-            <div className="retro-card rounded-xl p-1 retro-glow animate-bounce">
-              <Card className="border-0 bg-gradient-to-r from-accent to-primary text-accent-foreground">
-                <CardContent className="pt-6 text-center">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Star className="h-6 w-6 animate-spin text-yellow-300" />
-                    <span className="font-bold text-lg retro-text-shadow animate-pulse">
-                      🎉 Congratulations! Day {checkinData.currentStreak} complete! 🎉
-                    </span>
-                    <Star className="h-6 w-6 animate-spin text-yellow-300" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-              {celebrationParticles.map((particle) => (
-                <div
-                  key={particle.id}
-                  className="absolute animate-ping"
-                  style={{
-                    left: `${20 + particle.id * 10}%`,
-                    top: `${30 + (particle.id % 3) * 20}%`,
-                    animationDelay: `${particle.delay}ms`,
-                    animationDuration: "2s",
-                  }}
-                >
-                  <div className="text-2xl">
-                    {particle.id % 4 === 0 ? "🌟" : particle.id % 4 === 1 ? "✨" : particle.id % 4 === 2 ? "🎊" : "💫"}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40">
-              <div className="animate-bounce text-4xl font-bold text-primary retro-text-shadow">+10 Points!</div>
-            </div>
-          </>
-        )}
+        {showCelebration && <ParticleExplosion />}
 
         <div className="retro-card rounded-xl p-1 retro-glow">
           <Card className="border-0 bg-transparent text-center">
-            <CardHeader>
-              <CardTitle className="text-7xl text-primary retro-text-shadow flex items-center justify-center space-x-3">
-                <Trophy className="h-16 w-16 drop-shadow-lg" />
-                <span>{checkinData.currentStreak}</span>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-baseline justify-center gap-3">
+                <span className="text-6xl font-bold tracking-tight text-primary">{checkinData.currentStreak}</span>
+                <span className="text-6xl font-bold tracking-tight text-foreground">days sober</span>
               </CardTitle>
-              <CardDescription className="text-xl font-semibold">Days Sober</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="mb-6">
-                <div className="flex items-center justify-center space-x-3 mb-1">
-                  <Star className="h-5 w-5 text-accent" />
-                  <span className="text-2xl font-bold text-accent retro-text-shadow">Level {getLevel().level}</span>
-                  <Star className="h-5 w-5 text-accent" />
-                </div>
-                <div className="text-base font-semibold text-muted-foreground mb-1">{getLevel().title}</div>
-                {getLevel().nextLevel && (
-                  <div className="text-xs text-muted-foreground">
-                    {getLevel().daysToNext} days to Level {getLevel().nextLevel}
-                  </div>
-                )}
-              </div>
-              <div className="flex justify-center items-center">
+              <div className="flex items-center justify-center gap-8">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-accent retro-text-shadow">{checkinData.totalCheckins}</div>
+                  <div className="text-xl font-semibold text-foreground">Level {getLevel().level}</div>
+                  <div className="text-sm text-muted-foreground">{getLevel().title}</div>
+                </div>
+                <div className="w-px h-10 bg-border" />
+                <div className="text-center">
+                  <div className="text-xl font-semibold text-foreground">{checkinData.totalCheckins}</div>
                   <div className="text-sm text-muted-foreground">Check-ins</div>
                 </div>
               </div>
+              {getLevel().nextLevel && (
+                <div className="text-center mt-4 text-xs text-muted-foreground">
+                  {getLevel().daysToNext} days to Level {getLevel().nextLevel}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
