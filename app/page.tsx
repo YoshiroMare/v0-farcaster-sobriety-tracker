@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -29,6 +29,97 @@ interface LeaderboardUser {
 }
 
 type View = "tracker" | "leaderboard"
+
+interface Particle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  life: number
+  maxLife: number
+  size: number
+  color: string
+}
+
+function ParticleExplosion() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    
+    const colors = ['#22c55e', '#4ade80', '#86efac', '#bbf7d0', '#ffffff']
+    const particles: Particle[] = []
+    const centerX = canvas.width / 2
+    const centerY = canvas.height / 2
+    
+    // Create particles from center
+    for (let i = 0; i < 60; i++) {
+      const angle = (Math.PI * 2 * i) / 60 + Math.random() * 0.5
+      const speed = 4 + Math.random() * 8
+      particles.push({
+        x: centerX,
+        y: centerY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1,
+        maxLife: 1,
+        size: 3 + Math.random() * 4,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      })
+    }
+    
+    let animationId: number
+    
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      
+      let allDead = true
+      
+      particles.forEach(p => {
+        if (p.life <= 0) return
+        allDead = false
+        
+        p.x += p.vx
+        p.y += p.vy
+        p.vy += 0.15 // gravity
+        p.vx *= 0.99 // friction
+        p.life -= 0.015
+        
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2)
+        ctx.fillStyle = p.color
+        ctx.globalAlpha = p.life
+        ctx.fill()
+      })
+      
+      ctx.globalAlpha = 1
+      
+      if (!allDead) {
+        animationId = requestAnimationFrame(animate)
+      }
+    }
+    
+    animate()
+    
+    return () => {
+      if (animationId) cancelAnimationFrame(animationId)
+    }
+  }, [])
+  
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-50"
+    />
+  )
+}
 
 export default function SobrietyTracker() {
   const [currentView, setCurrentView] = useState<View>("tracker")
@@ -642,21 +733,14 @@ export default function SobrietyTracker() {
           </div>
         </div>
 
-        {showCelebration && (
-          <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
-            <div className="text-center animate-in fade-in zoom-in duration-300">
-              <div className="text-5xl font-bold text-primary mb-2">Day {checkinData.currentStreak}</div>
-              <div className="text-lg text-muted-foreground tracking-wide">+10 points</div>
-            </div>
-          </div>
-        )}
+        {showCelebration && <ParticleExplosion />}
 
         <div className="retro-card rounded-xl p-1 retro-glow">
           <Card className="border-0 bg-transparent text-center">
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center justify-center gap-4">
+              <CardTitle className="flex items-baseline justify-center gap-3">
                 <span className="text-6xl font-bold tracking-tight text-primary">{checkinData.currentStreak}</span>
-                <span className="text-2xl font-medium text-muted-foreground">days sober</span>
+                <span className="text-6xl font-bold tracking-tight text-foreground">days sober</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
