@@ -4,47 +4,47 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Clean black and white minimalist palette */
-  --background: oklch(0.98 0 0); /* Pure white background */
-  --foreground: oklch(0.15 0 0); /* Deep black text */
-  --card: oklch(0.96 0 0); /* Light gray card */
-  --card-foreground: oklch(0.15 0 0); /* Deep black card text */
-  --popover: oklch(0.98 0 0); /* White popover */
+  /* Calming sobriety-inspired palette with sage green and teal accents */
+  --background: oklch(0.97 0.01 60); /* Soft warm off-white */
+  --foreground: oklch(0.15 0 0); /* Deep navy/black text */
+  --card: oklch(0.98 0.005 60); /* Crisp off-white cards */
+  --card-foreground: oklch(0.15 0 0); /* Deep text on cards */
+  --popover: oklch(0.98 0.005 60); /* White popover */
   --popover-foreground: oklch(0.15 0 0); /* Black popover text */
-  --primary: oklch(0.15 0 0); /* Black primary */
+  --primary: oklch(0.40 0.12 160); /* Deep teal primary */
   --primary-foreground: oklch(0.98 0 0); /* White text on primary */
-  --secondary: oklch(0.92 0 0); /* Light gray secondary */
-  --secondary-foreground: oklch(0.15 0 0); /* Black text on secondary */
-  --muted: oklch(0.94 0 0); /* Muted gray background */
-  --muted-foreground: oklch(0.45 0 0); /* Medium gray muted text */
-  --accent: oklch(0.25 0 0); /* Dark gray accent */
+  --secondary: oklch(0.88 0.02 60); /* Light warm gray secondary */
+  --secondary-foreground: oklch(0.20 0 0); /* Dark text on secondary */
+  --muted: oklch(0.92 0.01 60); /* Muted warm background */
+  --muted-foreground: oklch(0.50 0.02 160); /* Soft teal muted text */
+  --accent: oklch(0.52 0.14 160); /* Vibrant sage green/teal accent */
   --accent-foreground: oklch(0.98 0 0); /* White text on accent */
-  --destructive: oklch(0.35 0 0); /* Dark gray for destructive actions */
+  --destructive: oklch(0.55 0.10 20); /* Warm red for destructive */
   --destructive-foreground: oklch(0.98 0 0); /* White text on destructive */
-  --border: oklch(0.85 0 0); /* Light gray border */
-  --input: oklch(0.96 0 0); /* Light input background */
-  --ring: oklch(0.25 0 0 / 0.6); /* Dark gray focus ring */
-  --chart-1: oklch(0.15 0 0); /* Black chart color */
-  --chart-2: oklch(0.25 0 0); /* Dark gray chart color */
-  --chart-3: oklch(0.35 0 0); /* Medium gray chart color */
-  --chart-4: oklch(0.45 0 0); /* Light gray chart accent */
-  --chart-5: oklch(0.55 0 0); /* Lighter gray chart accent */
-  --radius: 0.75rem; /* Rounded corners */
-  --sidebar: oklch(0.96 0 0); /* Light sidebar */
+  --border: oklch(0.90 0.01 60); /* Soft border color */
+  --input: oklch(0.97 0.005 60); /* Light input background */
+  --ring: oklch(0.52 0.14 160 / 0.5); /* Teal focus ring */
+  --chart-1: oklch(0.40 0.12 160); /* Teal chart */
+  --chart-2: oklch(0.52 0.14 160); /* Sage chart */
+  --chart-3: oklch(0.60 0.10 160); /* Light teal chart */
+  --chart-4: oklch(0.70 0.06 160); /* Very light teal */
+  --chart-5: oklch(0.80 0.03 160); /* Pale teal */
+  --radius: 1rem; /* Generous corner radius (16px) */
+  --sidebar: oklch(0.98 0.005 60); /* Light sidebar */
   --sidebar-foreground: oklch(0.15 0 0); /* Dark sidebar text */
-  --sidebar-primary: oklch(0.15 0 0); /* Black sidebar primary */
+  --sidebar-primary: oklch(0.40 0.12 160); /* Teal sidebar primary */
   --sidebar-primary-foreground: oklch(0.98 0 0); /* White text on sidebar primary */
-  --sidebar-accent: oklch(0.25 0 0); /* Dark gray sidebar accent */
+  --sidebar-accent: oklch(0.52 0.14 160); /* Sage sidebar accent */
   --sidebar-accent-foreground: oklch(0.98 0 0); /* White text on sidebar accent */
-  --sidebar-border: oklch(0.85 0 0); /* Light gray sidebar border */
-  --sidebar-ring: oklch(0.25 0 0 / 0.6); /* Dark gray sidebar focus ring */
+  --sidebar-border: oklch(0.90 0.01 60); /* Soft sidebar border */
+  --sidebar-ring: oklch(0.52 0.14 160 / 0.5); /* Teal sidebar focus ring */
 
-  /* Enhanced shadows and effects for depth */
-  --retro-shadow: 0 10px 30px oklch(0.15 0 0 / 0.15), 0 5px 15px oklch(0.15 0 0 / 0.1), 0 2px 5px oklch(0.15 0 0 / 0.05);
-  --retro-inset: inset 0 1px 2px oklch(0.98 0 0 / 0.5), inset 0 -1px 2px oklch(0.85 0 0 / 0.3);
-  --retro-glow: 0 0 30px oklch(0.15 0 0 / 0.2), 0 0 15px oklch(0.25 0 0 / 0.15);
-  --retro-gradient: linear-gradient(135deg, oklch(0.15 0 0) 0%, oklch(0.25 0 0) 50%, oklch(0.15 0 0) 100%);
-  --bg-gradient: linear-gradient(180deg, oklch(0.98 0 0) 0%, oklch(0.95 0 0) 50%, oklch(0.96 0 0) 100%);
+  /* Premium glass morphism and subtle gradients */
+  --retro-shadow: 0 12px 32px oklch(0.15 0 0 / 0.12), 0 6px 16px oklch(0.15 0 0 / 0.08), 0 2px 4px oklch(0.15 0 0 / 0.04);
+  --retro-inset: inset 0 1px 2px oklch(0.98 0 0 / 0.6), inset 0 -1px 2px oklch(0.85 0 0 / 0.2);
+  --retro-glow: 0 0 24px oklch(0.52 0.14 160 / 0.15), 0 0 12px oklch(0.52 0.14 160 / 0.08);
+  --retro-gradient: linear-gradient(135deg, oklch(0.40 0.12 160) 0%, oklch(0.52 0.14 160) 50%, oklch(0.40 0.12 160) 100%);
+  --bg-gradient: linear-gradient(180deg, oklch(0.97 0.01 60) 0%, oklch(0.96 0.008 60) 50%, oklch(0.97 0.01 60) 100%);
 }
 
 .dark {
@@ -143,17 +143,18 @@
   }
 }
 
-/* Minimalist black and white utility classes */
+/* Premium glass morphism and spacing utilities */
 @layer utilities {
   .retro-card {
-    /* Layered shadows for depth instead of borders */
+    /* Subtle layered shadows for premium depth */
     box-shadow: var(--retro-shadow);
     border: none;
-    /* Frosted glass effect */
-    background: oklch(from var(--card) l c h / 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    /* Glass morphism with blur */
+    background: oklch(from var(--card) l c h / 0.6);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
     position: relative;
+    transition: all 0.3s ease;
   }
 
   .retro-card::before {
@@ -168,13 +169,17 @@
     pointer-events: none;
   }
 
+  .retro-card:hover {
+    box-shadow: 0 16px 40px oklch(0.15 0 0 / 0.15), 0 8px 20px oklch(0.15 0 0 / 0.1), 0 2px 4px oklch(0.15 0 0 / 0.05);
+  }
+
   .retro-button {
     background: var(--retro-gradient);
-    /* Layered shadows instead of flat borders */
-    box-shadow: 0 8px 20px oklch(0.15 0 0 / 0.2), 0 4px 10px oklch(0.15 0 0 / 0.15), 0 2px 5px oklch(0.15 0 0 / 0.1);
+    box-shadow: 0 8px 20px oklch(0.40 0.12 160 / 0.25), 0 4px 10px oklch(0.40 0.12 160 / 0.15), 0 2px 5px oklch(0.40 0.12 160 / 0.08);
     border: none;
     position: relative;
     overflow: hidden;
+    transition: all 0.3s ease;
   }
 
   .retro-button::before {
@@ -189,17 +194,31 @@
     pointer-events: none;
   }
 
+  .retro-button:hover {
+    box-shadow: 0 12px 28px oklch(0.40 0.12 160 / 0.30), 0 6px 15px oklch(0.40 0.12 160 / 0.20), 0 2px 6px oklch(0.40 0.12 160 / 0.12);
+  }
+
   .retro-glow {
     box-shadow: var(--retro-glow);
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: var(--retro-glow);
+    }
+    50% {
+      box-shadow: 0 0 32px oklch(0.52 0.14 160 / 0.20), 0 0 16px oklch(0.52 0.14 160 / 0.12);
+    }
   }
 
   .retro-text-shadow {
-    text-shadow: 2px 2px 8px oklch(0.25 0 0 / 0.3), 1px 1px 4px oklch(0.25 0 0 / 0.2);
+    text-shadow: 2px 2px 4px oklch(0.40 0.12 160 / 0.15), 1px 1px 2px oklch(0.40 0.12 160 / 0.10);
   }
 
   .retro-border {
-    border: 3px solid;
-    border-color: var(--border);
-    border-style: ridge;
+    border: 2px solid;
+    border-color: var(--accent);
+    border-radius: var(--radius);
   }
 }

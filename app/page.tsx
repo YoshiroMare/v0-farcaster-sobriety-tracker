@@ -507,8 +507,8 @@ export default function SobrietyTracker() {
 
   if (currentView === "leaderboard") {
     return (
-      <div className="min-h-screen bg-background p-4">
-        <div className="max-w-md mx-auto space-y-6">
+      <div className="min-h-screen bg-background p-4 md:p-6">
+        <div className="max-w-md mx-auto space-y-8">
           <div className="text-center space-y-4">
             <div className="flex justify-center">
               <img src="/images/sober-logo.png" alt="Sober" className="h-20 w-auto object-contain" />
@@ -523,8 +523,8 @@ export default function SobrietyTracker() {
           </div>
 
           {userContext?.user && (
-            <div className="retro-card rounded-xl p-1">
-              <Card className="border-0 bg-transparent">
+            <div className="retro-card rounded-3xl p-1">
+              <Card className="border-0 bg-gradient-to-br from-white/30 to-accent/5 backdrop-blur-sm">
                 <CardContent className="pt-4 pb-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
@@ -554,8 +554,8 @@ export default function SobrietyTracker() {
           )}
 
           {leaderboard.find((u) => u.isCurrentUser) && (
-            <div className="retro-card rounded-xl p-1 retro-glow">
-              <Card className="border-0 bg-gradient-to-br from-accent/10 to-primary/10">
+            <div className="retro-card rounded-3xl p-1 retro-glow">
+              <Card className="border-0 bg-gradient-to-br from-accent/15 to-accent/5 backdrop-blur-md">
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
@@ -577,11 +577,11 @@ export default function SobrietyTracker() {
             </div>
           )}
 
-          <div className="retro-card rounded-xl p-1">
-            <Card className="border-0 bg-transparent">
+          <div className="retro-card rounded-3xl p-1">
+            <Card className="border-0 bg-gradient-to-br from-white/30 to-accent/5 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-xl">Top Performers</CardTitle>
-                <CardDescription className="text-base">Ranked by current streak and total points</CardDescription>
+                <CardTitle className="text-2xl font-bold">Top Performers</CardTitle>
+                <CardDescription className="text-base">Ranked by streak & points</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4 text-center">
@@ -600,10 +600,10 @@ export default function SobrietyTracker() {
             </Card>
           </div>
 
-          <div className="retro-card rounded-xl p-1">
-            <Card className="border-0 bg-transparent">
+          <div className="retro-card rounded-3xl p-1">
+            <Card className="border-0 bg-gradient-to-br from-white/30 to-accent/5 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-xl">Community Stats</CardTitle>
+                <CardTitle className="text-2xl font-bold">Community Stats</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4 text-center">
@@ -622,44 +622,43 @@ export default function SobrietyTracker() {
             </Card>
           </div>
 
-          <div className="flex justify-center space-x-4 pt-4">
-            <button
-              onClick={() => setCurrentView("tracker")}
-              className="retro-button px-6 py-3 rounded-lg text-primary-foreground font-semibold transition-all duration-200 hover:scale-105 flex items-center space-x-2"
-            >
-              <Home className="h-4 w-4" />
-              <span className="relative z-10">Back to Tracker</span>
-            </button>
-          </div>
+          <button
+            onClick={() => setCurrentView("tracker")}
+            className="w-full px-6 py-3 rounded-2xl bg-gradient-to-r from-accent to-emerald-400 text-white font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-95 flex items-center justify-center space-x-2 mt-2"
+          >
+            <Home className="h-5 w-5" />
+            <span>Back to Tracker</span>
+          </button>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-md mx-auto space-y-6">
-        <div className="text-center space-y-4">
+    <div className="min-h-screen bg-background p-4 md:p-6">
+      <div className="max-w-md mx-auto space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-3 pt-2 pb-2">
           <div className="flex justify-center">
-            <img src="/images/sober-logo.png" alt="Sober" className="h-24 w-auto object-contain" />
+            <img src="/images/sober-logo.png" alt="Sober" className="h-20 w-auto object-contain" />
           </div>
-          <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-foreground retro-text-shadow">Sobriety Tracker</h1>
-            <p className="text-muted-foreground text-lg">One day at a time</p>
+          <div className="space-y-1">
+            <h1 className="text-3xl font-bold text-foreground">Sobriety Tracker</h1>
+            <p className="text-base text-muted-foreground font-medium">One day at a time</p>
           </div>
         </div>
 
         {showCelebration && (
           <>
-            <div className="retro-card rounded-xl p-1 retro-glow animate-bounce">
-              <Card className="border-0 bg-gradient-to-r from-accent to-primary text-accent-foreground">
+            <div className="retro-card rounded-3xl p-1 retro-glow animate-bounce">
+              <Card className="border-0 bg-gradient-to-r from-accent via-emerald-400 to-accent text-white">
                 <CardContent className="pt-6 text-center">
                   <div className="flex items-center justify-center space-x-2">
-                    <Star className="h-6 w-6 animate-spin text-yellow-300" />
-                    <span className="font-bold text-lg retro-text-shadow animate-pulse">
-                      🎉 Congratulations! Day {checkinData.currentStreak} complete! 🎉
+                    <Star className="h-6 w-6 animate-spin" />
+                    <span className="font-bold text-lg animate-pulse">
+                      Day {checkinData.currentStreak} complete!
                     </span>
-                    <Star className="h-6 w-6 animate-spin text-yellow-300" />
+                    <Star className="h-6 w-6 animate-spin" />
                   </div>
                 </CardContent>
               </Card>
@@ -677,7 +676,7 @@ export default function SobrietyTracker() {
                     animationDuration: "2s",
                   }}
                 >
-                  <div className="text-2xl">
+                  <div className="text-3xl">
                     {particle.id % 4 === 0 ? "🌟" : particle.id % 4 === 1 ? "✨" : particle.id % 4 === 2 ? "🎊" : "💫"}
                   </div>
                 </div>
@@ -685,114 +684,126 @@ export default function SobrietyTracker() {
             </div>
 
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40">
-              <div className="animate-bounce text-4xl font-bold text-primary retro-text-shadow">+10 Points!</div>
+              <div className="animate-bounce text-5xl font-black text-accent drop-shadow-lg">+10 Points!</div>
             </div>
           </>
         )}
 
-        <div className="retro-card rounded-xl p-1 retro-glow">
-          <Card className="border-0 bg-transparent text-center">
-            <CardHeader>
-              <CardTitle className="text-7xl text-primary retro-text-shadow flex items-center justify-center space-x-3">
-                <Trophy className="h-16 w-16 drop-shadow-lg" />
-                <span>{checkinData.currentStreak}</span>
-              </CardTitle>
-              <CardDescription className="text-xl font-semibold">Days Sober</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-6">
-                <div className="flex items-center justify-center space-x-3 mb-1">
-                  <Star className="h-5 w-5 text-accent" />
-                  <span className="text-2xl font-bold text-accent retro-text-shadow">Level {getLevel().level}</span>
-                  <Star className="h-5 w-5 text-accent" />
+        {/* Hero Card - Dominant Days Sober */}
+        <div className="retro-card rounded-3xl p-1 retro-glow">
+          <Card className="border-0 bg-gradient-to-br from-white/40 to-accent/5 backdrop-blur-xl text-center py-12">
+            <CardContent className="pt-0">
+              <div className="space-y-4">
+                {/* Dominant Number */}
+                <div className="space-y-1">
+                  <div className="text-9xl font-black text-accent tracking-tighter" style={{ letterSpacing: "-0.02em" }}>
+                    {checkinData.currentStreak}
+                  </div>
+                  <p className="text-xl font-medium text-muted-foreground">days sober</p>
                 </div>
-                <div className="text-base font-semibold text-muted-foreground mb-1">{getLevel().title}</div>
+
+                {/* Level & Check-ins as Side-by-Side Chips */}
+                <div className="flex gap-3 justify-center pt-6 pb-2">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20">
+                    <Medal className="h-5 w-5 text-accent" />
+                    <div className="text-center">
+                      <span className="font-bold text-accent">Level {getLevel().level}</span>
+                      <div className="text-xs text-muted-foreground">{getLevel().title}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20">
+                    <CalendarDays className="h-5 w-5 text-accent" />
+                    <div className="text-center">
+                      <span className="font-bold text-accent">{checkinData.totalCheckins}</span>
+                      <div className="text-xs text-muted-foreground">Check-ins</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Next Level Progress (if applicable) */}
                 {getLevel().nextLevel && (
-                  <div className="text-xs text-muted-foreground">
-                    {getLevel().daysToNext} days to Level {getLevel().nextLevel}
+                  <div className="pt-4 border-t border-accent/10">
+                    <p className="text-sm text-muted-foreground">
+                      {getLevel().daysToNext} days to Level {getLevel().nextLevel}
+                    </p>
                   </div>
                 )}
-              </div>
-              <div className="flex justify-center items-center">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-accent retro-text-shadow">{checkinData.totalCheckins}</div>
-                  <div className="text-sm text-muted-foreground">Check-ins</div>
-                </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="retro-card rounded-xl p-1">
-          <Card className="border-0 bg-gradient-to-br from-accent/10 to-primary/10">
-            <CardContent className="pt-6">
-              <blockquote className="text-center italic text-foreground text-lg font-medium retro-text-shadow">
-                "{getMotivationalMessage()}"
+        {/* Quote Card - Softer Motivational Message */}
+        <div className="retro-card rounded-3xl p-1">
+          <Card className="border-0 bg-gradient-to-br from-accent/8 to-transparent backdrop-blur-sm">
+            <CardContent className="pt-8 pb-8 px-8">
+              <blockquote className="text-center space-y-1">
+                <p className="text-sm text-accent font-medium">"</p>
+                <p className="text-lg italic text-foreground font-medium leading-relaxed">
+                  {getMotivationalMessage()}
+                </p>
+                <p className="text-sm text-accent font-medium">"</p>
               </blockquote>
             </CardContent>
           </Card>
         </div>
 
-        <div className="retro-card rounded-xl p-1 retro-glow">
-          <Card className="border-0 bg-transparent">
-            <CardContent className="pt-6 text-center">
-              {canCheckinToday() ? (
-                <button
-                  onClick={handleCheckin}
-                  disabled={isLoading}
-                  className="retro-button w-full h-16 rounded-lg text-primary-foreground font-bold text-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <span className="relative z-10 flex items-center justify-center space-x-2">
-                    {isLoading ? (
-                      <>
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-                        <span>Checking In...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Trophy className="h-6 w-6" />
-                        <span>Check In Today!</span>
-                      </>
-                    )}
-                  </span>
-                </button>
+        {/* Check-in Button - Full-width Capsule with Gradient */}
+        <div className="space-y-3">
+          {canCheckinToday() ? (
+            <button
+              onClick={handleCheckin}
+              disabled={isLoading}
+              className="w-full h-14 rounded-full bg-gradient-to-r from-accent to-emerald-400 text-white font-bold text-lg transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center space-x-2 group"
+            >
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                  <span>Checking In...</span>
+                </>
               ) : (
-                <div className="w-full h-16 rounded-lg bg-black text-white font-bold text-xl flex items-center justify-center space-x-2 border-2 border-accent">
-                  <Trophy className="h-6 w-6" />
-                  <span>Checked In Today!</span>
-                </div>
+                <>
+                  <Trophy className="h-5 w-5 group-hover:animate-bounce" />
+                  <span>Check In Today!</span>
+                </>
               )}
-              <div className="mt-3 text-sm text-muted-foreground">Last check-in: {formatLastCheckin()}</div>
-            </CardContent>
-          </Card>
+            </button>
+          ) : (
+            <div className="w-full h-14 rounded-full bg-accent/20 border-2 border-accent text-accent font-bold text-lg flex items-center justify-center space-x-2">
+              <Trophy className="h-5 w-5" />
+              <span>Checked In Today!</span>
+            </div>
+          )}
+          <p className="text-center text-sm text-muted-foreground">Last check-in: {formatLastCheckin()}</p>
         </div>
 
-        <div className="retro-card rounded-xl p-1">
-          <Card className="border-0 bg-transparent">
-            <CardHeader>
-              <CardTitle className="text-xl">Achievements</CardTitle>
-              <CardDescription className="text-base">{getAllAchievements().length} achievements earned</CardDescription>
+        {/* Achievements Section */}
+        <div className="retro-card rounded-3xl p-1">
+          <Card className="border-0 bg-gradient-to-br from-white/30 to-accent/5 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-2xl font-bold">Achievements</CardTitle>
+              <CardDescription className="text-base">{getAllAchievements().length} milestones unlocked</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {getAllAchievements().map((achievement, index) => (
-                  <Badge key={index} variant={achievement.variant} className="text-sm px-3 py-1 font-semibold">
+                  <Badge key={index} variant={achievement.variant === "default" ? "default" : "secondary"} className="text-sm px-3 py-1.5 font-semibold">
                     {achievement.text}
                   </Badge>
                 ))}
                 {checkinData.currentStreak < 15 && (
-                  <Badge variant="outline" className="text-sm px-3 py-1 font-semibold opacity-50">
-                    Two Weeks (Coming Soon)
+                  <Badge variant="outline" className="text-sm px-3 py-1.5 font-semibold opacity-40">
+                    Two Weeks
                   </Badge>
                 )}
                 {checkinData.currentStreak >= 15 && checkinData.currentStreak < 30 && (
-                  <Badge variant="outline" className="text-sm px-3 py-1 font-semibold opacity-50">
-                    One Month (Coming Soon)
+                  <Badge variant="outline" className="text-sm px-3 py-1.5 font-semibold opacity-40">
+                    One Month
                   </Badge>
                 )}
                 {checkinData.currentStreak >= 30 && checkinData.currentStreak < 60 && (
-                  <Badge variant="outline" className="text-sm px-3 py-1 font-semibold opacity-50">
-                    Two Months (Coming Soon)
+                  <Badge variant="outline" className="text-sm px-3 py-1.5 font-semibold opacity-40">
+                    Two Months
                   </Badge>
                 )}
               </div>
@@ -800,33 +811,33 @@ export default function SobrietyTracker() {
           </Card>
         </div>
 
-        <div className="flex flex-col items-center space-y-4 pt-4">
+        {/* Support & Community Actions */}
+        <div className="flex flex-col space-y-3 pt-2">
           <button
             onClick={() => setCurrentView("leaderboard")}
-            className="px-4 py-2 rounded-lg border-2 border-accent bg-secondary/50 text-secondary-foreground font-semibold transition-all duration-200 hover:scale-105 flex items-center space-x-2"
+            className="w-full px-4 py-3 rounded-2xl border-2 border-accent bg-accent/10 text-accent font-semibold transition-all duration-200 hover:bg-accent/15 hover:scale-[1.02] active:scale-95 flex items-center justify-center space-x-2"
           >
-            <Users className="h-4 w-4" />
+            <Users className="h-5 w-5" />
             <span>Leaderboard</span>
           </button>
 
-          <div className="flex flex-col space-y-3 w-full max-w-sm">
-            <button
-              onClick={() => window.open("https://na.org/meetingsearch/", "_blank")}
-              className="w-full px-6 py-3 rounded-lg border-2 border-accent bg-secondary/50 text-secondary-foreground font-semibold transition-all duration-200 hover:scale-105 hover:bg-secondary/70 flex items-center justify-center space-x-2"
-            >
-              <MapPin className="h-4 w-4" />
-              <span>Find a Support Group Near You</span>
-              <ExternalLink className="h-3 w-3 opacity-60" />
-            </button>
-            <button
-              onClick={() => window.open("https://paragraph.com/@yoshiromare/is-addiction-really-a-disease", "_blank")}
-              className="w-full px-6 py-3 rounded-lg border-2 border-accent bg-secondary/50 text-secondary-foreground font-semibold transition-all duration-200 hover:scale-105 hover:bg-secondary/70 flex items-center justify-center space-x-2"
-            >
-              <BookOpen className="h-4 w-4" />
-              <span>Is Addiction Really a Disease?</span>
-              <ExternalLink className="h-3 w-3 opacity-60" />
-            </button>
-          </div>
+          <button
+            onClick={() => window.open("https://na.org/meetingsearch/", "_blank")}
+            className="w-full px-4 py-3 rounded-2xl border-2 border-muted bg-muted/50 text-foreground font-semibold transition-all duration-200 hover:bg-muted/70 hover:scale-[1.02] active:scale-95 flex items-center justify-center space-x-2"
+          >
+            <MapPin className="h-5 w-5" />
+            <span>Find Support Group</span>
+            <ExternalLink className="h-4 w-4 opacity-60" />
+          </button>
+
+          <button
+            onClick={() => window.open("https://paragraph.com/@yoshiromare/is-addiction-really-a-disease", "_blank")}
+            className="w-full px-4 py-3 rounded-2xl border-2 border-muted bg-muted/50 text-foreground font-semibold transition-all duration-200 hover:bg-muted/70 hover:scale-[1.02] active:scale-95 flex items-center justify-center space-x-2"
+          >
+            <BookOpen className="h-5 w-5" />
+            <span>Learn About Addiction</span>
+            <ExternalLink className="h-4 w-4 opacity-60" />
+          </button>
         </div>
       </div>
     </div>
