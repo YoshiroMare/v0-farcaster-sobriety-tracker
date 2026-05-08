@@ -54,15 +54,15 @@ function ParticleExplosion() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
     
-    const colors = ['#22c55e', '#4ade80', '#86efac', '#bbf7d0', '#ffffff']
+    const colors = ['#000000', '#1a1a1a', '#333333', '#4d4d4d', '#666666']
     const particles: Particle[] = []
     const centerX = canvas.width / 2
     const centerY = canvas.height / 2
     
     // Create particles from center
-    for (let i = 0; i < 60; i++) {
-      const angle = (Math.PI * 2 * i) / 60 + Math.random() * 0.5
-      const speed = 4 + Math.random() * 8
+    for (let i = 0; i < 80; i++) {
+      const angle = (Math.PI * 2 * i) / 80 + Math.random() * 0.5
+      const speed = 3 + Math.random() * 6
       particles.push({
         x: centerX,
         y: centerY,
@@ -70,15 +70,33 @@ function ParticleExplosion() {
         vy: Math.sin(angle) * speed,
         life: 1,
         maxLife: 1,
-        size: 3 + Math.random() * 4,
+        size: 2 + Math.random() * 3,
         color: colors[Math.floor(Math.random() * colors.length)]
       })
     }
     
     let animationId: number
+    let textOpacity = 0
+    let textFadeIn = true
     
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+      
+      // Draw text
+      if (textFadeIn && textOpacity < 1) {
+        textOpacity += 0.03
+      } else if (textOpacity >= 1) {
+        textFadeIn = false
+      }
+      
+      ctx.save()
+      ctx.globalAlpha = Math.min(1, textOpacity)
+      ctx.font = 'bold 32px system-ui, -apple-system, sans-serif'
+      ctx.fillStyle = '#000000'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText('One Day At a Time', centerX, centerY)
+      ctx.restore()
       
       let allDead = true
       
@@ -88,9 +106,9 @@ function ParticleExplosion() {
         
         p.x += p.vx
         p.y += p.vy
-        p.vy += 0.15 // gravity
-        p.vx *= 0.99 // friction
-        p.life -= 0.015
+        p.vy += 0.1
+        p.vx *= 0.98
+        p.life -= 0.012
         
         const radius = Math.max(0, p.size * p.life)
         ctx.beginPath()
@@ -102,7 +120,7 @@ function ParticleExplosion() {
       
       ctx.globalAlpha = 1
       
-      if (!allDead) {
+      if (!allDead || textOpacity < 1) {
         animationId = requestAnimationFrame(animate)
       }
     }
